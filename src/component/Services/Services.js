@@ -5,18 +5,27 @@ export default class Services {
 
     getResource = async (url) => {
         const response = await fetch(`${this._apiBase}${url}`);
-        if (!url.ok) {
+        if (!response.ok) {
             throw new Error(`Cloud not fetch ${url}; received ${response.status} `)
         }
         return await response.json();
-    }
+    };
 
     getAllPost = async () => {
-        const response =await this.getResource('/posts');
-        return response;
+        return await this.getResource('/posts/');
+    };
+
+    getAllPhoto = async () => {
+        const response = await this.getResource('/posts');
+        return response.map(this._transformPost);
+    };
+
+    _transformPost = (post) => {
+        return {
+            src: post.src,
+            alt: post.alt
+        }
     }
-
-
 }
 
 

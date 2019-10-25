@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Services from "../../Services/Services";
 import User from "../Users/User";
-
+import Error from "../../Error/Error";
 
 export default class Posts extends Component {
     Services = new Services();
@@ -17,16 +17,15 @@ export default class Posts extends Component {
     updatePosts() {
         this.Services.getAllPost()
             .then(this.onPostLoader)
-            .catch(this.onError)
-
+            .catch(this.onError);
     };
 
-    onPostLoader = (posts) => {
+    onPostLoader = (posts) => {  // єтот метод та я вижу что делает этот метод
         this.setState({
             posts, // or  posts: posts
             error: false
         });
-        console.log(this.state.posts);
+        console.log(this.state.posts);// при попытки загрузить эти джеймоны у меня получантся пустой массив
     };
 
     onError = () => {
@@ -40,7 +39,7 @@ export default class Posts extends Component {
             const {name, altname, photo, src, alt, descr, id} = item;
 
             return (
-                <div className="post">
+                <div key={id} className="post">
                     <User
                         src={photo}
                         alt={altname}
@@ -48,18 +47,11 @@ export default class Posts extends Component {
                         min={true}
                     />
                     <img src={src} alt={alt}/>
-                    <div className={name}>
-                        some account
+                    <div className="post__name">
+                        {name}
                     </div>
-                    <div className={descr}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi
-                        ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-                        esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui
-                        officia deserunt mollit anim id est laborum.
+                    <div className="post__descr">
+                        {descr}
                     </div>
                 </div>
             )
@@ -68,9 +60,16 @@ export default class Posts extends Component {
 
 
     render() {
+        const {posts, error} = this.state;
+        if (error) {
+            return <Error/>
+        }
+
+        const items = this.returnItems(posts);
+
         return (
             <div className="left">
-
+                {items}
             </div>
         )
 
