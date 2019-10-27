@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Services from "../../Services/Services";
-import Error from "../../Error/Error";
+import ErrorMessage from "../../Error/ErrorMassage";
 
 export default class Pallete extends Component {
     Services = new Services();
@@ -49,7 +49,7 @@ export default class Pallete extends Component {
     render() {
         const {photo, error} = this.state;
         if (error) {
-            return <Error/>
+            return <ErrorMessage/>
         }
 
         const itemsPhoto = this.returnItemsPhoto(photo);

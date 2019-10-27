@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Services from "../../Services/Services";
 import User from "../Users/User";
-import Error from "../../Error/Error";
+import ErrorMessage from "../../Error/ErrorMassage";
 
 export default class Posts extends Component {
     Services = new Services();
@@ -62,7 +62,7 @@ export default class Posts extends Component {
     render() {
         const {posts, error} = this.state;
         if (error) {
-            return <Error/>
+            return <ErrorMessage/>
         }
 
         const items = this.returnItems(posts);
